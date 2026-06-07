@@ -1,0 +1,66 @@
+<!-- 添加面试轮次 -->
+<view class="container">
+  <view class="form-card">
+    <view class="form-title">轮次名称</view>
+    <view class="preset-tags">
+      <t-tag
+        wx:for="{{presetNames}}"
+        wx:key="*this"
+        variant="{{roundName === item ? 'dark' : 'outline'}}"
+        shape="round"
+        bind:tap="onPresetTap"
+        data-name="{{item}}"
+      >
+        {{item}}
+      </t-tag>
+    </view>
+    <t-input
+      placeholder="或输入自定义轮次名称"
+      value="{{roundName}}"
+      bind:change="onInput"
+      data-field="roundName"
+      error="{{showValidation && !roundName.trim() ? '请输入轮次名称' : ''}}"
+    />
+  </view>
+
+  <view class="form-card">
+    <view class="form-title">面试信息</view>
+    <view class="form-item">
+      <text class="form-label">面试日期</text>
+      <picker mode="date" value="{{interviewDate}}" bindchange="onDateChange">
+        <view class="form-value">{{interviewDate}}</view>
+      </picker>
+    </view>
+    <t-input
+      label="面试官"
+      placeholder="面试官姓名（可选）"
+      value="{{interviewer}}"
+      bind:change="onInput"
+      data-field="interviewer"
+    />
+    <view class="result-wrap">
+      <text class="result-label">本轮结果</text>
+      <t-radio-group value="{{result}}" bind:change="onResultChange" class="result-radios">
+        <t-radio wx:for="{{resultOptions}}" wx:key="value" value="{{item.value}}" label="{{item.label}}" />
+      </t-radio-group>
+    </view>
+  </view>
+
+  <view class="form-card">
+    <view class="form-title">反馈记录</view>
+    <view class="textarea-wrap">
+      <t-textarea
+        placeholder="记录面试中的问题、你的表现、面试官的反馈等"
+        value="{{feedback}}"
+        bind:change="onInput"
+        data-field="feedback"
+        maxlength="500"
+        autosize
+      />
+    </view>
+  </view>
+
+  <view class="submit-wrap">
+    <t-button theme="primary" block bind:tap="onSave">保存</t-button>
+  </view>
+</view>

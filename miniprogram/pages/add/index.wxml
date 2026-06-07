@@ -1,0 +1,63 @@
+<!-- 添加求职记录 -->
+<view class="container">
+  <view class="form-card">
+    <view class="form-title">基本信息</view>
+    <t-input
+      label="公司名称"
+      placeholder="请输入公司名称"
+      value="{{companyName}}"
+      bind:change="onInput"
+      data-field="companyName"
+      required
+      error="{{showValidation && !companyName.trim() ? '请输入公司名称' : ''}}"
+    />
+    <t-input
+      label="岗位名称"
+      placeholder="请输入岗位名称"
+      value="{{positionName}}"
+      bind:change="onInput"
+      data-field="positionName"
+      required
+      error="{{showValidation && !positionName.trim() ? '请输入岗位名称' : ''}}"
+    />
+    <view class="form-item">
+      <text class="form-label">投递日期</text>
+      <picker mode="date" value="{{appliedDate}}" bindchange="onDateChange">
+        <view class="form-value">{{appliedDate}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="form-card">
+    <view class="form-title">可选信息</view>
+    <t-input
+      label="工作地点"
+      placeholder="如：北京、上海"
+      value="{{location}}"
+      bind:change="onInput"
+      data-field="location"
+    />
+    <t-input
+      label="薪资范围"
+      placeholder="如：25K-40K"
+      value="{{salaryRange}}"
+      bind:change="onInput"
+      data-field="salaryRange"
+    />
+    <view class="textarea-wrap">
+      <text class="textarea-label">备注</text>
+      <t-textarea
+        placeholder="记录一些补充信息"
+        value="{{notes}}"
+        bind:change="onInput"
+        data-field="notes"
+        maxlength="200"
+        autosize
+      />
+    </view>
+  </view>
+
+  <view class="submit-wrap">
+    <t-button theme="primary" block bind:tap="onSave">保存</t-button>
+  </view>
+</view>

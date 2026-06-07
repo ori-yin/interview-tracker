@@ -1,0 +1,52 @@
+/* 编辑页样式 - TDesign 版本 */
+.container {
+  padding: var(--spacing-md);
+  padding-bottom: var(--spacing-xl);
+}
+
+.form-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-1);
+}
+
+.form-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.picker-wrap {
+  padding: var(--spacing-sm) 0;
+}
+
+.picker-label {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.status-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.textarea-wrap {
+  padding: var(--spacing-sm) 0;
+}
+
+.textarea-label {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+.submit-wrap {
+  margin-top: var(--spacing-lg);
+}

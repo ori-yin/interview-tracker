@@ -1,0 +1,70 @@
+/* 添加面试轮次样式 */
+.container {
+  padding: var(--spacing-md);
+  padding-bottom: var(--spacing-xl);
+}
+
+.form-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-1);
+}
+
+.form-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1rpx solid var(--color-neutral-100);
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: var(--color-text-primary);
+}
+
+.form-value {
+  font-size: 28rpx;
+  color: var(--color-text-secondary);
+}
+
+.preset-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.result-wrap {
+  padding: var(--spacing-sm) 0;
+}
+
+.result-label {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.result-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.textarea-wrap {
+  padding: var(--spacing-xs) 0;
+}
+
+.submit-wrap {
+  margin-top: var(--spacing-lg);
+}

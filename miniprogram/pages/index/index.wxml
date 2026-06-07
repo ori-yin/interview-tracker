@@ -1,0 +1,157 @@
+<!-- 首页 - 求职记录列表 -->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section card-style" wx:if="{{!isSelectMode}}">
+    <t-search
+      placeholder="搜索公司或岗位"
+      value="{{searchKeyword}}"
+      bind:change="onSearchInput"
+      bind:submit="onSearchConfirm"
+      bind:clear="clearSearch"
+    />
+  </view>
+
+  <!-- 状态筛选 + 日期筛选 -->
+  <view class="filter-bar" wx:if="{{!isSelectMode}}">
+    <view class="filter-tabs">
+      <t-tabs
+        value="{{activeTab}}"
+        bind:change="onTabChange"
+      >
+        <t-tab-panel label="全部" value="all" />
+        <t-tab-panel label="流程中" value="interviewing" />
+        <t-tab-panel label="已通过" value="passed" />
+        <t-tab-panel label="已拒绝" value="failed" />
+      </t-tabs>
+    </view>
+    <view class="filter-date" bindtap="toggleDatePicker">
+      <t-icon name="calendar" size="32rpx" />
+    </view>
+  </view>
+
+  <!-- 日期选择弹窗 -->
+  <t-popup
+    visible="{{showDatePicker}}"
+    placement="bottom"
+    bind:visible-change="onDatePickerClose"
+  >
+    <view class="date-picker-popup">
+      <view class="date-picker-header">
+        <text class="date-picker-title">选择日期范围</text>
+      </view>
+      <view class="date-picker-body">
+        <view class="date-presets">
+          <t-tag
+            wx:for="{{datePresets}}"
+            wx:key="value"
+            variant="{{item.active ? 'dark' : 'outline'}}"
+            shape="round"
+            bind:tap="onDatePresetTap"
+            data-value="{{item.value}}"
+          >
+            {{item.label}}
+          </t-tag>
+        </view>
+      </view>
+      <view class="date-picker-footer">
+        <t-button theme="default" bind:tap="onDatePickerCancel">取消</t-button>
+        <t-button theme="primary" bind:tap="onDatePickerConfirm">确定</t-button>
+      </view>
+    </view>
+  </t-popup>
+
+  <!-- 多选模式顶部栏 -->
+  <view class="select-bar" wx:if="{{isSelectMode}}">
+    <t-button variant="text" bind:tap="onCancelSelect">取消</t-button>
+    <text class="select-count">已选 {{selectedIds.length}} 项</text>
+    <t-button variant="text" bind:tap="onSelectAll">{{isAllSelected ? '取消全选' : '全选'}}</t-button>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && applications.length === 0}}">
+    <t-empty description="还没有求职记录" />
+    <t-button theme="primary" bind:tap="goToAdd" style="margin-top: 32rpx;">添加求职记录</t-button>
+  </view>
+
+  <!-- 求职记录列表 -->
+  <view class="app-list" wx:else>
+    <view
+      class="app-card"
+      wx:for="{{applications}}"
+      wx:key="_id"
+      bindtap="onTapCard"
+      data-id="{{item._id}}"
+      data-index="{{index}}"
+      bindlongpress="onLongPress"
+    >
+      <!-- 多选框 -->
+      <view class="checkbox-wrap" wx:if="{{isSelectMode}}">
+        <view class="checkbox {{item.isSelected ? 'checkbox-checked' : ''}}">
+          <text wx:if="{{item.isSelected}}" class="checkbox-icon">✓</text>
+        </view>
+      </view>
+
+      <!-- 第一行：公司名·岗位·日期 + 状态 -->
+      <view class="app-header">
+        <view class="app-info">
+          <text class="company-name">{{item.companyName}}</text>
+          <text class="separator">·</text>
+          <text class="position-name">{{item.positionName}}</text>
+          <text class="separator">·</text>
+          <text class="date">{{item.appliedDate}}</text>
+        </view>
+        <t-tag
+          variant="dark"
+          shape="round"
+          theme="{{item.dynamicTheme}}"
+          size="small"
+        >
+          {{item.dynamicStatusText}}
+        </t-tag>
+      </view>
+
+      <!-- 第二行：流程进度条 -->
+      <view class="process-flow">
+        <view class="process-steps">
+          <view
+            class="process-step"
+            wx:for="{{item.processSteps}}"
+            wx:for-item="step"
+            wx:for-index="stepIndex"
+            wx:key="stepIndex"
+          >
+            <view class="step-dot {{step.dotClass}}">
+              <view class="step-inner"></view>
+            </view>
+            <text class="step-name">{{step.name}}</text>
+            <view
+              wx:if="{{step.lineClass}}"
+              class="step-line {{step.lineClass}}"
+            ></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="loading-more" wx:if="{{loadingMore}}">
+      <t-loading theme="circular" size="40rpx" />
+      <text class="loading-text">加载中...</text>
+    </view>
+    <view class="no-more" wx:if="{{!hasMore && applications.length > 0}}">
+      <text class="no-more-text">没有更多了</text>
+    </view>
+  </view>
+
+  <!-- 底部删除按钮 -->
+  <view class="delete-bar" wx:if="{{isSelectMode && selectedIds.length > 0}}">
+    <t-button theme="danger" block bind:tap="onDeleteSelected">
+      删除 ({{selectedIds.length}})
+    </t-button>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bind:tap="goToAdd" wx:if="{{!isSelectMode}}">
+    <t-icon name="add" size="48rpx" color="#fff" />
+  </view>
+</view>
