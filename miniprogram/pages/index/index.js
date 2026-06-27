@@ -118,6 +118,11 @@ Page({
       { appliedDate: db.command.gte(startDate).and(db.command.lte(endDate)) },
     ];
 
+    // 仅查询当前用户的记录
+    if (this._openid) {
+      conditions.push({ _openid: this._openid });
+    }
+
     if (keyword) {
       conditions.push(
         db.command.or([
@@ -144,6 +149,11 @@ Page({
     }
 
     try {
+      // 等待 openid（仅首次会等待，后续从缓存读取）
+      const app = getApp();
+      await app._openidReady;
+      this._openid = app._openid;
+
       const query = applicationsCol.where(this._buildCondition()).orderBy('createdAt', 'desc').limit(PAGE_SIZE);
       const res = await query.get();
       const newApps = res.data;
